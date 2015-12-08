@@ -1,0 +1,20 @@
+PODS:
+  - Alamofire (2.0.0-beta.3)
+
+DEPENDENCIES:
+  - Alamofire (from `https://github.com/Alamofire/Alamofire.git`, commit `39e5ecb98c8cab9b258d87fdbe33d7cfe7765326`)
+
+EXTERNAL SOURCES:
+  Alamofire:
+    :commit: 39e5ecb98c8cab9b258d87fdbe33d7cfe7765326
+    :git: https://github.com/Alamofire/Alamofire.git
+
+CHECKOUT OPTIONS:
+  Alamofire:
+    :commit: 39e5ecb98c8cab9b258d87fdbe33d7cfe7765326
+    :git: https://github.com/Alamofire/Alamofire.git
+
+SPEC CHECKSUMS:
+  Alamofire: 39dddb7d3725d1771b1d2f7099c8bd45bd83ffbb
+
+COCOAPODS: 0.39.0
