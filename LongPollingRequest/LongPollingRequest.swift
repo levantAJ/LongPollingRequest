@@ -1,4 +1,4 @@
-//
+    //
 //  LongPollingRequest.swift
 //  LongPollingRequest
 //
@@ -31,8 +31,10 @@ public class LongPollingRequest {
         configuration.HTTPMaximumConnectionsPerHost = httpMaximumConnectionsPerHost
         manager = Manager(configuration: configuration)
         implementation = { (urlString: String, params:[String:AnyObject]?, callback: LongPollingCallback, index:Int) -> Request in
-            return self.manager.request(.POST, urlString + "?offset=\(self.offset)", parameters: params)
-                .responseJSON { (_, _, result) in
+            return self.manager.request(.POST, urlString + "?offset=\(self.offset)",
+                parameters: params,
+                encoding: .JSON,
+                headers: nil).responseJSON { (_, _, result) in
                     switch result {
                     case .Success(let json):
                         callback(data: json, error: nil, index: index, next: { () -> Void in
@@ -84,5 +86,5 @@ public class LongPollingRequest {
         queueParameters = []
         queueCallback = []
     }
-
+    
 }
