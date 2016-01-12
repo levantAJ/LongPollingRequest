@@ -34,24 +34,23 @@ public class LongPollingRequest {
             return self.manager.request(.POST, urlString + "?offset=\(self.offset)",
                 parameters: params,
                 encoding: .JSON,
-                headers: nil).responseJSON { (_, _, result) in
-                    switch result {
-                    case .Success(let json):
-                        callback(data: json, error: nil, index: index, next: { () -> Void in
-                            if self.isPolling {
-                                self.requests[index] = self.implementation(urlString: urlString, params: params, callback: callback, index: index)
-                            }
-                        })
-                    case .Failure(_, let error as NSError):
-                        callback(data: nil, error: error, index: index, next: { () -> Void in
-                            if self.isPolling {
-                                self.requests[index] = self.implementation(urlString: urlString, params: params, callback: callback, index: index)
-                            }
-                        })
-                    default:
-                        return
-                    }
-            }
+                headers: nil)
+            .responseJSON(completionHandler: { (response) -> Void in
+                switch response.result {
+                case .Success(let json):
+                    callback(data: json, error: nil, index: index, next: { () -> Void in
+                        if self.isPolling {
+                            self.requests[index] = self.implementation(urlString: urlString, params: params, callback: callback, index: index)
+                        }
+                    })
+                case .Failure(let error):
+                    callback(data: nil, error: error, index: index, next: { () -> Void in
+                        if self.isPolling {
+                            self.requests[index] = self.implementation(urlString: urlString, params: params, callback: callback, index: index)
+                        }
+                    })
+                }
+            })
         }
     }
     
